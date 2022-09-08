@@ -1,0 +1,17 @@
+dbtype: 'postgres'
+
+dbconfig:
+  host: '172.17.0.2'
+  port: 5432
+  config: 'sslmode=disable TimeZone=Asia/Shanghai'
+  dbname: 'gpaas_db'
+  username: 'gormuser'
+  password: 'gormuser'
+  max_idle_connections: 10
+  max_open_connections: 100
+
+jwtconfig: 
+  scretkey: ''
+  expirestime: 60   
+  buffertime: 60
+  issuer: 'github.com/jackyuan2010'

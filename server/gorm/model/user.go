@@ -1,3 +1,5 @@
+package model
+
 type User struct {
 	Model
 	Name string `json:"name" gorm:"size:100;not null"`

@@ -11,9 +11,9 @@ type PostgresDbContext struct {
 	DbConfig *gpaasgorm.DbConfig
 }
 
-func NewDbContext(dbconfig *gpaasgorm.DbConfig) *PostgresDbContext {
-	dbcontext := &PostgresDbContext{DbConfig : dbconfig}
-	return dbcontext;
+func NewDbContext(dbconfig *gpaasgorm.DbConfig) PostgresDbContext {
+	dbcontext := PostgresDbContext{DbConfig : dbconfig}
+	return dbcontext
 }
 
 func (dc *PostgresDbContext) DSN() string {

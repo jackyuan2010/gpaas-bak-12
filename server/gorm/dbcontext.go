@@ -5,6 +5,6 @@ import (
 )
 
 type DbContext interface {
-	GetDb() *gorm.DB
 	DSN() string 
+	GetDb() *gorm.DB
 }
