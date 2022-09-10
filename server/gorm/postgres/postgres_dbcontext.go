@@ -1,6 +1,7 @@
 package gorm
 
 import (
+	"sync"
 	"strings"
 	"gorm.io/gorm"
 	"gorm.io/driver/postgres"
@@ -9,6 +10,8 @@ import (
 
 type PostgresDbContext struct {
 	DbConfig *gpaasgorm.DbConfig
+	db *gorm.DB
+	lock sync.RWMutex
 }
 
 func NewDbContext(dbconfig *gpaasgorm.DbConfig) PostgresDbContext {
@@ -39,6 +42,11 @@ func (dc *PostgresDbContext) DSN() string {
 }
 
 func (dc *PostgresDbContext) GetDb() *gorm.DB {
+	if(dc.db != nil) {
+		return dc.db;
+	}
+	dc.lock.RLock()
+	defer dc.lock.RUnlock()
 	pgsqlconfig := postgres.Config{
 		DSN:                  dc.DSN(),
 		PreferSimpleProtocol: false,
@@ -50,6 +58,7 @@ func (dc *PostgresDbContext) GetDb() *gorm.DB {
 		sqlDB, _ := db.DB()
 		sqlDB.SetMaxIdleConns(dc.DbConfig.MaxIdleConns)
 		sqlDB.SetMaxOpenConns(dc.DbConfig.MaxOpenConns)
+		dc.db = db
 		return db
 	}
 }

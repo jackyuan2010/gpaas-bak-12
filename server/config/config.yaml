@@ -15,3 +15,8 @@ jwtconfig:
   expirestime: 60   
   buffertime: 60
   issuer: 'github.com/jackyuan2010'
+
+redisconfig:
+  db: 0
+  addr: '172.17.0.2:6379'
+  password: ''  

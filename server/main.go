@@ -9,9 +9,12 @@ import(
 func main() {
 	fmt.Println("gpaas app starting....")
 	appcontext.InitAppContext()
+
 	jwtUtil := utils.NewJWTUtil()
 	claims := jwtUtil.CreateClaims("13311221122", "jackyuan2010")
+
 	fmt.Println(claims)
+
 	// config.Viper()
 	
 	// initDB()

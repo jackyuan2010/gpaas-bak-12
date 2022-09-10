@@ -1,6 +1,7 @@
 package appcontext
 
 import (
+	"context"
 	"fmt"
 	"golang.org/x/sync/singleflight"
 	"github.com/jackyuan2010/gpaas/server/config"
@@ -24,7 +25,7 @@ func InitAppContext() {
 	APP_VP = Viper()
 	fmt.Println(APP_CONFIG)
 	initDbContext()
-	// initRedis()
+	initRedis()
 }
 
 func initDbContext() {
@@ -35,5 +36,17 @@ func initDbContext() {
 }
 
 func initRedis() {
-
+	redisCfg := APP_CONFIG.RedisConfig
+	client := redis.NewClient(&redis.Options{
+		Addr:     redisCfg.Addr,
+		Password: redisCfg.Password,
+		DB:       redisCfg.DB,
+	})
+	pong, err := client.Ping(context.Background()).Result()
+	if err != nil {
+		fmt.Println(err)
+	} else {
+		fmt.Println(pong)
+		APP_REDIS = client
+	}
 }
