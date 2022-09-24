@@ -3,44 +3,44 @@ package utils
 import (
 	"errors"
 	"fmt"
-	"time"
-	ginmodel "github.com/jackyuan2010/gpaas/server/gin/model"
 	"github.com/golang-jwt/jwt/v4"
-	uuid "github.com/satori/go.uuid"
 	"github.com/jackyuan2010/gpaas/server/appcontext"
+	ginmodel "github.com/jackyuan2010/gpaas/server/gin/model"
+	uuid "github.com/satori/go.uuid"
+	"time"
 )
 
 type JWTUtil struct {
-	SecretKey []byte
+	SecretKey   []byte
 	ExpiresTime int64
-	BufferTime int64
-	Issuer     string
+	BufferTime  int64
+	Issuer      string
 }
 
 var (
-	TokenExpired     = errors.New("Token is expired")
-	TokenNotValid    = errors.New("Token not active yet")
-	TokenMalformed   = errors.New("That's not even a token")
-	TokenInvalid     = errors.New("Couldn't handle this token:")
+	TokenExpired   = errors.New("Token is expired")
+	TokenNotValid  = errors.New("Token not active yet")
+	TokenMalformed = errors.New("That's not even a token")
+	TokenInvalid   = errors.New("Couldn't handle this token:")
 )
 
 func NewJWTUtil() *JWTUtil {
 	return &JWTUtil{
-		SecretKey: []byte(appcontext.APP_CONFIG.JWTConfig.SecretKey),
+		SecretKey:   []byte(appcontext.APP_CONFIG.JWTConfig.SecretKey),
 		ExpiresTime: appcontext.APP_CONFIG.JWTConfig.ExpiresTime,
-		BufferTime: appcontext.APP_CONFIG.JWTConfig.BufferTime,
-		Issuer: appcontext.APP_CONFIG.JWTConfig.Issuer,
+		BufferTime:  appcontext.APP_CONFIG.JWTConfig.BufferTime,
+		Issuer:      appcontext.APP_CONFIG.JWTConfig.Issuer,
 	}
 }
 
 func (jwtUtil *JWTUtil) CreateClaims(mobile string, userName string) ginmodel.JWTClaims {
 	claims := ginmodel.JWTClaims{
-		UUID: uuid.NewV4(),
-		Mobile: mobile,
-		UserName: userName,
+		UUID:       uuid.NewV4(),
+		Mobile:     mobile,
+		UserName:   userName,
 		BufferTime: jwtUtil.BufferTime, //缓冲时间内会获得新的token刷新令牌
 		StandardClaims: jwt.StandardClaims{
-			NotBefore: time.Now().Unix() - 1000,                 // 签名生效时间
+			NotBefore: time.Now().Unix() - 1000,                // 签名生效时间
 			ExpiresAt: time.Now().Unix() + jwtUtil.ExpiresTime, // 过期时间
 			Issuer:    jwtUtil.Issuer,                          // 签名的发行者
 		},

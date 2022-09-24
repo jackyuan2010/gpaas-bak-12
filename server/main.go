@@ -1,6 +1,6 @@
 package main
 
-import(
+import (
 	"fmt"
 	"github.com/jackyuan2010/gpaas/server/appcontext"
 	"github.com/jackyuan2010/gpaas/server/utils"
@@ -16,7 +16,7 @@ func main() {
 	fmt.Println(claims)
 
 	// config.Viper()
-	
+
 	// initDB()
 	// router := SetupRoutes()
 	// router.Run(":8081")

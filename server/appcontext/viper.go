@@ -2,10 +2,10 @@ package appcontext
 
 import (
 	"fmt"
-	"time"
-	"github.com/spf13/viper"
 	"github.com/fsnotify/fsnotify"
 	"github.com/songzhibin97/gkit/cache/local_cache"
+	"github.com/spf13/viper"
+	"time"
 )
 
 func Viper() *viper.Viper {
@@ -14,7 +14,7 @@ func Viper() *viper.Viper {
 	vp.SetConfigType("yaml")
 	vp.AddConfigPath("./config/")
 	err := vp.ReadInConfig()
-	if(err != nil) {
+	if err != nil {
 		panic(fmt.Errorf("Fatal error read config file: %s", err))
 	}
 
@@ -35,4 +35,4 @@ func Viper() *viper.Viper {
 		local_cache.SetDefaultExpire(time.Second * time.Duration(APP_CONFIG.JWTConfig.ExpiresTime)),
 	)
 	return vp
-} 
+}

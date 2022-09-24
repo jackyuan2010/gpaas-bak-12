@@ -2,20 +2,19 @@ package dto
 
 // User register structure
 type RegisterDto struct {
-	Mobile     string `json:"mobile"`
-	Password     string `json:"password"`
-	UserName     string `json:"userName"`
-	HeaderImg    string `json:"headerImg"`
+	Mobile    string `json:"mobile"`
+	Password  string `json:"password"`
+	UserName  string `json:"userName"`
+	HeaderImg string `json:"headerImg"`
 }
 
 // User login structure
 type LoginDto struct {
-	Mobile  string `json:"mobile"`  // 用户名
+	Mobile    string `json:"mobile"`    // 用户名
 	Password  string `json:"password"`  // 密码
 	Captcha   string `json:"captcha"`   // 验证码
 	CaptchaId string `json:"captchaId"` // 验证码ID
 }
-
 
 // Modify password structure
 type ChangePasswordDto struct {

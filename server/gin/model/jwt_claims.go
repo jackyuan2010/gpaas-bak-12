@@ -1,8 +1,8 @@
 package model
 
 import (
-	uuid "github.com/satori/go.uuid"
 	"github.com/golang-jwt/jwt/v4"
+	uuid "github.com/satori/go.uuid"
 )
 
 type JWTClaims struct {

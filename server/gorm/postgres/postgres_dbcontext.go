@@ -1,21 +1,21 @@
 package gorm
 
 import (
-	"sync"
-	"strings"
-	"gorm.io/gorm"
-	"gorm.io/driver/postgres"
 	gpaasgorm "github.com/jackyuan2010/gpaas/server/gorm"
+	"gorm.io/driver/postgres"
+	"gorm.io/gorm"
+	"strings"
+	"sync"
 )
 
 type PostgresDbContext struct {
 	DbConfig *gpaasgorm.DbConfig
-	db *gorm.DB
-	lock sync.RWMutex
+	db       *gorm.DB
+	lock     sync.Mutex
 }
 
 func NewDbContext(dbconfig *gpaasgorm.DbConfig) PostgresDbContext {
-	dbcontext := PostgresDbContext{DbConfig : dbconfig}
+	dbcontext := PostgresDbContext{DbConfig: dbconfig}
 	return dbcontext
 }
 
@@ -42,11 +42,11 @@ func (dc *PostgresDbContext) DSN() string {
 }
 
 func (dc *PostgresDbContext) GetDb() *gorm.DB {
-	if(dc.db != nil) {
-		return dc.db;
+	if dc.db != nil {
+		return dc.db
 	}
-	dc.lock.RLock()
-	defer dc.lock.RUnlock()
+	dc.lock.Lock()
+	defer dc.lock.Unlock()
 	pgsqlconfig := postgres.Config{
 		DSN:                  dc.DSN(),
 		PreferSimpleProtocol: false,

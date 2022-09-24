@@ -3,22 +3,22 @@ package appcontext
 import (
 	"context"
 	"fmt"
-	"golang.org/x/sync/singleflight"
+	"github.com/go-redis/redis/v8"
 	"github.com/jackyuan2010/gpaas/server/config"
 	gpaasgorm "github.com/jackyuan2010/gpaas/server/gorm"
 	gpaaspostgres "github.com/jackyuan2010/gpaas/server/gorm/postgres"
-	"github.com/go-redis/redis/v8"
-	"github.com/spf13/viper"
 	"github.com/songzhibin97/gkit/cache/local_cache"
+	"github.com/spf13/viper"
+	"golang.org/x/sync/singleflight"
 )
 
 var (
-	APP_VP     *viper.Viper
-	APP_CONFIG config.ServerConfig
-	APP_DbContext gpaasgorm.DbContext
-	APP_REDIS  *redis.Client
+	APP_VP                     *viper.Viper
+	APP_CONFIG                 config.ServerConfig
+	APP_DbContext              gpaasgorm.DbContext
+	APP_REDIS                  *redis.Client
 	APP_Concurrency_Controller = &singleflight.Group{}
-	APP_JWTCache local_cache.Cache
+	APP_JWTCache               local_cache.Cache
 )
 
 func InitAppContext() {
@@ -29,7 +29,7 @@ func InitAppContext() {
 }
 
 func initDbContext() {
-	if(APP_CONFIG.DbType == "postgres") {
+	if APP_CONFIG.DbType == "postgres" {
 		dbcontext := gpaaspostgres.NewDbContext(&APP_CONFIG.DbConfig)
 		APP_DbContext = &dbcontext
 	}
