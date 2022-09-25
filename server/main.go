@@ -18,6 +18,6 @@ func main() {
 	// config.Viper()
 
 	// initDB()
-	// router := SetupRoutes()
-	// router.Run(":8081")
+	router := appcontext.Routers()
+	router.Run(":8081")
 }
