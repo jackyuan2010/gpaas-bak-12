@@ -2,13 +2,14 @@ package main
 
 import (
 	"fmt"
-	"github.com/jackyuan2010/gpaas/server/appcontext"
+	gpaascontext "github.com/jackyuan2010/gpaas/server/context"
+	"github.com/jackyuan2010/gpaas/server/core"
 	"github.com/jackyuan2010/gpaas/server/utils"
 )
 
 func main() {
 	fmt.Println("gpaas app starting....")
-	appcontext.InitAppContext()
+	gpaascontext.InitAppContext()
 
 	jwtUtil := utils.NewJWTUtil()
 	claims := jwtUtil.CreateClaims("13311221122", "jackyuan2010")
@@ -18,6 +19,6 @@ func main() {
 	// config.Viper()
 
 	// initDB()
-	router := appcontext.Routers()
+	router := core.Routers()
 	router.Run(":8081")
 }

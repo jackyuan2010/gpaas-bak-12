@@ -4,7 +4,7 @@ import (
 	"errors"
 	"fmt"
 	"github.com/golang-jwt/jwt/v4"
-	"github.com/jackyuan2010/gpaas/server/appcontext"
+	"github.com/jackyuan2010/gpaas/server/context"
 	ginmodel "github.com/jackyuan2010/gpaas/server/gin/model"
 	uuid "github.com/satori/go.uuid"
 	"time"
@@ -26,10 +26,10 @@ var (
 
 func NewJWTUtil() *JWTUtil {
 	return &JWTUtil{
-		SecretKey:   []byte(appcontext.APP_CONFIG.JWTConfig.SecretKey),
-		ExpiresTime: appcontext.APP_CONFIG.JWTConfig.ExpiresTime,
-		BufferTime:  appcontext.APP_CONFIG.JWTConfig.BufferTime,
-		Issuer:      appcontext.APP_CONFIG.JWTConfig.Issuer,
+		SecretKey:   []byte(context.AppContext.APP_CONFIG.JWTConfig.SecretKey),
+		ExpiresTime: context.AppContext.APP_CONFIG.JWTConfig.ExpiresTime,
+		BufferTime:  context.AppContext.APP_CONFIG.JWTConfig.BufferTime,
+		Issuer:      context.AppContext.APP_CONFIG.JWTConfig.Issuer,
 	}
 }
 
@@ -57,7 +57,7 @@ func (jwtUtil *JWTUtil) GernerateToken(claims ginmodel.JWTClaims) string {
 }
 
 func (jwtUtil *JWTUtil) Refresh(oldToken string, claims ginmodel.JWTClaims) (string, error) {
-	v, err, _ := appcontext.APP_Concurrency_Controller.Do("JWT:"+oldToken, func() (interface{}, error) {
+	v, err, _ := context.AppContext.APP_Concurrency_Controller.Do("JWT:"+oldToken, func() (interface{}, error) {
 		return jwtUtil.GernerateToken(claims), nil
 	})
 	return v.(string), err
