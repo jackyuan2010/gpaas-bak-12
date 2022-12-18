@@ -2,6 +2,7 @@ package gorm
 
 import (
 	"fmt"
+
 	model "github.com/jackyuan2010/gpaas/server/gorm/model"
 	"gorm.io/gorm"
 )

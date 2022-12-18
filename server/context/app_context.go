@@ -20,7 +20,6 @@ func InitAppContext() {
 	AppContext = appContext{
 		APP_Concurrency_Controller: &singleflight.Group{},
 	}
-	// AppContext = appContext{}
 	AppContext.initViper()
 	AppContext.initDbContext()
 	AppContext.initRedis()
